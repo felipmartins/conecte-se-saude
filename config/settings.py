@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5d+bld@2j4f&&qs=1@)bday)o-ngag0-40*9onnkl1e4-$z6g7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['www.conectesaudebh.com.br','conectesaudebh.com.br','3.138.60.180']
+ALLOWED_HOSTS = ['www.conectesaudebh.com.br','conectesaudebh.com.br','3.138.60.180', 'localhost']
 
 
 # Application definition
