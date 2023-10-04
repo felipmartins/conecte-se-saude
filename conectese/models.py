@@ -1,15 +1,18 @@
+from datetime import date
 from django.db import models
 from conectese.validators import validate_cpf, validate_phone, validate_positive_number
 
 
 class Patient(models.Model):
+    CIVIL_STATUS_CHOICES = [('single', 'Solteiro(a)'), ('married', 'Casado(a)'), ('divorced', 'Divorciado(a)'), ('widower', 'Viúvo(a)')]
+    GENDER_CHOICES = [('male', 'Masculino'),('female', 'Feminino')]
     name = models.CharField(max_length=200)
     birth_date = models.DateField()
     cpf = models.CharField(max_length=14,  validators=[validate_cpf])
     contact_phone = models.CharField(max_length=10, validators=[validate_phone]) 
     emergency_phone = models.CharField(max_length=10, validators=[validate_phone]) 
-    civil_status = models.CharField(max_length=20, choices=[('single', 'Solteiro(a)'), ('married', 'Casado(a)'), ('divorced', 'Divorciado(a)'), ('widower', 'Viúvo(a)')])
-    gender = models.CharField(max_length=10, choices=[('male', 'Masculino'),('female', 'Feminino')])
+    civil_status = models.CharField(max_length=20, choices=CIVIL_STATUS_CHOICES ,default='single')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='male')
     number_of_lessons = models.IntegerField(default=0, validators=[validate_positive_number])
 
     def __str__(self):

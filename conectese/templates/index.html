@@ -1,9 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    Página Inicial
+Conecte-se Saúde
 {% endblock %}
 
 {% block content %}
-    <h1>Conecte-se</h1>
+
+<div class="grid grid-cols-3 gap-16">
+    <div>
+        <a class="flex flex-col items-center" href="{% url 'create_patient' %}">
+            <span class="font-bold">Cadastrar paciente</span>
+            <img class="rounded-full w-[200px] h-[200px]" src="{% static 'img/new_patient.png' %}"
+                alt="Cadastro de Paciente" />
+        </a>
+    </div>
+    <div>
+        <div>
+            <label for="tw-modal" class="flex flex-col items-center font-bold cursor-pointer">
+                Informações do paciente
+                <img class="rounded-full w-[200px] h-[200px]" src="{% static 'img/info_patient.png' %}" alt="Informações de Pacientes" />
+            </label>
+        </div>
+        <input type="checkbox" id="tw-modal" class="peer p-12 fixed appearance-none opacity-0">
+        <label for="tw-modal"
+        class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-blue-950 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100">
+
+        <label class="max-h-[calc(100vh - 5em)] h-fit max-w-lg scale-90 overflow-y-auto overscroll-contain rounded-md bg-blue-800 p-6 text-orange-500 shadow-2xl transition" for="">
+            <h3 class="text-lg font-bold mb-10">
+                Selecione o paciente
+            </h3>
+            <form class="flex flex-col items-center justify-center mb-10 rounded-md" action="{% url 'get_patient_info' %}" method="post">
+                {% csrf_token %}
+                {{patient_form.as_p}}
+                <input type="hidden" name="appointment_type" value="information">
+                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+            </form>
+        </label>
+
+    </label>
+        
+    </div>
+    <div>
+        <div>
+            <label for="tw-modal-2" class="flex flex-col items-center font-bold cursor-pointer">
+                Consulta médica
+                <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/new_medical_appointment.png' %}" alt="Nova Consulta Médica" />
+            </label>
+        </div>
+        <input type="checkbox" id="tw-modal-2" class="peer p-12 fixed appearance-none opacity-0">
+        <label for="tw-modal-2"
+        class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-blue-950 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100">
+
+        <label class="max-h-[calc(100vh - 5em)] h-fit max-w-lg scale-90 overflow-y-auto overscroll-contain rounded-md bg-blue-800 p-6 text-orange-500 shadow-2xl transition" for="">
+            <h3 class="text-lg font-bold mb-10">
+                Selecione o paciente
+            </h3>
+            <form class="flex flex-col items-center justify-center mb-10 rounded-md" action="{% url 'get_patient_info' %}" method="post">
+                {% csrf_token %}
+                {{patient_form.as_p}}
+                <input type="hidden" name="appointment_type" value="medical">
+                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+            </form>
+        </label>
+
+    </label>
+        
+        
+    </div>
+    <div>
+        Avaliação fisioterapêutica
+        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 4" />
+    </div>
+    <div>
+        Pagamento
+        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 5" />
+    </div>
+    <div>
+        Agenda
+        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 6" />
+    </div>
+</div>
+
 {% endblock %}
