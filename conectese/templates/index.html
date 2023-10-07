@@ -7,7 +7,7 @@ Conecte-se Saúde
 
 {% block content %}
 
-<div class="grid grid-cols-3 gap-16">
+<div class="grid grid-cols-3 gap-16 mt-24">
     <div>
         <a class="flex flex-col items-center" href="{% url 'create_patient' %}">
             <span class="font-bold">Cadastrar paciente</span>
@@ -69,16 +69,57 @@ Conecte-se Saúde
         
     </div>
     <div>
-        Avaliação fisioterapêutica
-        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 4" />
+        <div>
+            <label for="tw-modal-4" class="flex flex-col items-center font-bold cursor-pointer">
+                Avaliação fisioterapêutica
+                <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/new_physio_evaluation.png' %}" alt="Nova avaliação fisioterapêutica  " />
+            </label>
+        </div>
+        <input type="checkbox" id="tw-modal-4" class="peer p-12 fixed appearance-none opacity-0">
+        <label for="tw-modal-4"
+        class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-blue-950 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100">
+
+        <label class="max-h-[calc(100vh - 5em)] h-fit max-w-lg scale-90 overflow-y-auto overscroll-contain rounded-md bg-blue-800 p-6 text-orange-500 shadow-2xl transition" for="">
+            <h3 class="text-lg font-bold mb-10">
+                Selecione o paciente
+            </h3>
+            <form class="flex flex-col items-center justify-center mb-10 rounded-md" action="{% url 'get_patient_info' %}" method="post">
+                {% csrf_token %}
+                {{patient_form.as_p}}
+                <input type="hidden" name="appointment_type" value="physio">
+                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+            </form>
+        </label>
     </div>
     <div>
-        Pagamento
-        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 5" />
+        <div>
+            <label for="tw-modal-3" class="flex flex-col items-center font-bold cursor-pointer">
+                Pagamento
+                <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/new_payment.png' %}" alt="Novo Pagamento" />
+            </label>
+        </div>
+        <input type="checkbox" id="tw-modal-3" class="peer p-12 fixed appearance-none opacity-0">
+        <label for="tw-modal-3"
+        class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-blue-950 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100">
+
+        <label class="max-h-[calc(100vh - 5em)] h-fit max-w-lg scale-90 overflow-y-auto overscroll-contain rounded-md bg-blue-800 p-6 text-orange-500 shadow-2xl transition" for="">
+            <h3 class="text-lg font-bold mb-10">
+                Selecione o paciente
+            </h3>
+            <form class="flex flex-col items-center justify-center mb-10 rounded-md" action="{% url 'get_patient_info' %}" method="post">
+                {% csrf_token %}
+                {{patient_form.as_p}}
+                <input type="hidden" name="appointment_type" value="payment">
+                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+            </form>
+        </label>
     </div>
     <div>
-        Agenda
-        <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/botao.png' %}" alt="Botao 6" />
+        <a class="flex flex-col items-center" href="">
+            <span class="font-bold">Agenda</span>
+            <img class="rounded-full  w-[200px] h-[200px]" src="{% static 'img/calendar.png' %}" alt="Botão para Agenda" />
+        </a>
+        
     </div>
 </div>
 

@@ -35,6 +35,13 @@
                 {% endif%}
             {% endfor %}
         </div>
+        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+            {% if patient.pay_day %}
+            Dia do Vencimento: {{patient.pay_day}}
+            {% else %}
+            Dia do Vencimento: Sem pagamentos
+            {% endif %}
+        </div>
 
         <a class="px-8 py-2 hover:shadow-inner bg-orange-500 text-white rounded-3xl opacity-70 mb-8" href="{% url 'home' %}"> Voltar</a>
 
