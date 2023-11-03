@@ -1,4 +1,3 @@
-from datetime import date
 from django.db import models
 from conectese.validators import validate_cpf, validate_phone, validate_positive_number
 
@@ -15,15 +14,27 @@ class Patient(models.Model):
     birth_date = models.DateField()
     cpf = models.CharField(max_length=14, validators=[validate_cpf])
     contact_phone = models.CharField(max_length=10, validators=[validate_phone])
-    emergency_phone = models.CharField(max_length=10, validators=[validate_phone])
+    emergency_phone = models.CharField(
+        max_length=10,
+        validators=[validate_phone],
+    )
     civil_status = models.CharField(
         max_length=20, choices=CIVIL_STATUS_CHOICES, default="single"
     )
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default="male")
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES,
+        default="male",
+    )
     number_of_lessons = models.IntegerField(
         default=0, validators=[validate_positive_number]
     )
-    pay_day = models.CharField(max_length=2, default=None, null=True, blank=True)
+    pay_day = models.CharField(
+        max_length=2,
+        default=None,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
@@ -75,7 +86,9 @@ class Payment(models.Model):
 class PhysiotherapyAssessment(models.Model):
     date = models.DateField(auto_now_add=True)
     patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, related_name="physiotherapy_assessments"
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="physiotherapy_assessments",
     )
 
     patient_history = models.ForeignKey(
@@ -406,9 +419,12 @@ class AssessementDailyActivities(models.Model):
 
 class DailyEvolution(models.Model):
     patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, related_name="daily_evolutions"
+        Patient,
+        on_delete=models.CASCADE,
+        related_name="daily_evolutions",
+        unique_for_date="date",
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     presence = models.CharField(
         max_length=50, choices=[("present", "Presente"), ("absent", "Ausente")]
     )
@@ -452,7 +468,7 @@ class DailyEvolution(models.Model):
 
 
 class PhysicalActivityAppointment(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(unique=True)
     patient = models.ManyToManyField(
         Patient, related_name="physical_activity_appointments"
     )
@@ -465,5 +481,12 @@ class PhysicalActivityAppointment(models.Model):
         self.patient.remove(patient)
         self.save()
 
+    def count_patients(self):
+        return (
+            f"{self.patient.count()} Pacientes"
+            if self.patient.count() > 1
+            else f"{self.patient.count()} Paciente"
+        )
+
     def __str__(self):
-        return str(self.date)
+        return f"{self.date.strftime('%d/%m/%Y')}"

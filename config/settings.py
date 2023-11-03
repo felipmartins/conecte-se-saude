@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5d+bld@2j4f&&qs=1@)bday)o-ngag0-40*9onnkl1e4-$z6g7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.conectesaudebh.com.br','conectesaudebh.com.br','3.138.60.180', 'localhost']
+ALLOWED_HOSTS = ['www.conectesaudebh.com.br','conectesaudebh.com.br','3.138.60.180', '*']
 
 
 # Application definition
@@ -127,7 +127,7 @@ LOGIN_URL='login'
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL='login'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

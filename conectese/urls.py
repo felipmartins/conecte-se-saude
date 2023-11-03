@@ -9,6 +9,10 @@ from conectese.views import (
     create_payment,
     physio,
     create_physio_assessment,
+    calendar,
+    activity_appointment_details,
+    daily_evolution,
+    get_calendar_date,
 )
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
@@ -38,5 +42,21 @@ urlpatterns = [
         "physio/all/new/<int:patient_id>",
         create_physio_assessment,
         name="create_physio_assessment",
+    ),
+    path("calendar", calendar, name="calendar"),
+    path(
+        "activity_appointment_details/<int:activity_appointment_id>",
+        activity_appointment_details,
+        name="activity_appointment_details",
+    ),
+    path(
+        "daily_evolution/<int:activity_appointment_id>/<int:patient_id>",
+        daily_evolution,
+        name="daily_evolution",
+    ),
+    path(
+        "get_calendar_date/",
+        get_calendar_date,
+        name="get_calendar_date",
     ),
 ]

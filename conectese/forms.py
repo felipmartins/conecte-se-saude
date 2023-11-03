@@ -1,5 +1,6 @@
 from django import forms
 from conectese.models import (
+    DailyEvolution,
     Patient,
     MedicalAppointment,
     Payment,
@@ -12,6 +13,7 @@ from conectese.models import (
     AssessmentSensorial,
     AssessmentStrength,
 )
+from datetime import date
 
 
 class NewPatientForm(forms.ModelForm):
@@ -29,7 +31,9 @@ class NewPatientForm(forms.ModelForm):
         self.fields["civil_status"].label = "Estado Civil"
         self.fields["gender"].label = "Sexo"
 
-        self.fields["birth_date"].widget = forms.DateInput(attrs={"type": "date"})
+        self.fields["birth_date"].widget = forms.DateInput(
+            attrs={"type": "date"},
+        )
 
         for key in self.fields:
             self.fields[key].widget.attrs.update(
@@ -42,7 +46,9 @@ class SelectPatientForm(forms.Form):
         label="",
         queryset=Patient.objects.all(),
         empty_label="Escolha um paciente",
-        widget=forms.Select(attrs={"class": "flex rounded-md w-[200px] h-[25px]"}),
+        widget=forms.Select(
+            attrs={"class": "flex rounded-md w-[200px] h-[25px]"},
+        ),
     )
 
 
@@ -56,9 +62,9 @@ class NewMedicalAppointment(forms.ModelForm):
         self.fields["medical_record"].label = "Prontuário"
         self.fields["medical_record"].widget = forms.Textarea(
             attrs={
-                "class": "w-full mr-4 rounded-xl pl-1",
+                "class": "w-full mr-4 rounded-xl pl-2 pt-2",
                 "rows": 20,
-                "placeholder": "\n  Digite aqui o prontuário do paciente",
+                "placeholder": "Digite aqui o prontuário do paciente",
             }
         )
         self.fields["patient"].widget = forms.HiddenInput()
@@ -108,15 +114,17 @@ class NewPhysioterapyAssessment(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": "  Digite aqui",
+                    "placeholder": "Digite aqui",
                 }
             )
-        
+
         self.fields["objectives"].label = "Objetivos"
         self.fields["conducts"].label = "Condutas"
-        self.fields["observations_and_final_comments"].label = "Observações e considerações finais"
+        self.fields[
+            "observations_and_final_comments"
+        ].label = "Observações e considerações finais"
 
 
 class NewAssessementDailyActivities(forms.ModelForm):
@@ -147,9 +155,9 @@ class NewAssessementDailyActivities(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": '  Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -158,13 +166,13 @@ class NewAssessementDailyActivities(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-        
+
         self.fields["other_activities"].label = "Outras atividades"
-        self.fields["other_activities"].widget.attrs = attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
-                    "rows": 2,
-                    "placeholder": ' Digite aqui sobre outras atividades',
-                }
+        self.fields["other_activities"].widget.attrs = {
+            "class": "w-full mr-2 rounded-xl pl-1",
+            "rows": 2,
+            "placeholder": " Digite aqui sobre outras atividades",
+        }
 
         self.fields["personal_hygiene"].label = "Higiene pessoal"
         self.fields["dressing"].label = "Vestir-se"
@@ -197,9 +205,9 @@ class NewAssessmentBalance(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt_2",
                     "rows": 2,
-                    "placeholder": '\n  Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -208,7 +216,7 @@ class NewAssessmentBalance(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-       
+
         self.fields["static_balance"].label = "Equilíbrio estático"
         self.fields["dinamic_balance"].label = "Equilíbrio dinâmico"
         self.fields["march"].label = "Marcha"
@@ -235,12 +243,12 @@ class NewAssessmentHistory(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": "\n  Digite aqui",
+                    "placeholder": "Digite aqui",
                 }
             )
-        
+
         self.fields["main_plainte"].label = "Queixa principal"
         self.fields["avant_history"].label = "História pregressa"
         self.fields["actual_history"].label = "História atual"
@@ -283,9 +291,9 @@ class NewAssessmentMoviment(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": '\n  Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -294,7 +302,7 @@ class NewAssessmentMoviment(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-        
+
         self.fields["cervical_moviment"].label = "Cervical"
         self.fields["shoulder_moviment"].label = "Ombro"
         self.fields["elbow_moviment"].label = "Cotovelo"
@@ -336,9 +344,9 @@ class NewAssessmentPosture(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": ' Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -347,13 +355,15 @@ class NewAssessmentPosture(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-        
+
         self.fields["general_observation"].label = "Observações gerais"
         self.fields["head_alligment"].label = "Alinhamento da cabeça"
         self.fields["shoulder_alligment"].label = "Alinhamento dos ombros"
         self.fields["collumn_alligment"].label = "Alinhamento da coluna vertebral"
         self.fields["pelvis_alligment"].label = "Alinhamento da pelve"
-        self.fields["superior_and_inferior_members"].label = "Alinhamento dos membros superiores e inferiores"
+        self.fields[
+            "superior_and_inferior_members"
+        ].label = "Alinhamento dos membros superiores e inferiores"
 
 
 class NewAssessmentSensorial(forms.ModelForm):
@@ -381,9 +391,9 @@ class NewAssessmentSensorial(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1 pt-2",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": '\n  Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -392,7 +402,7 @@ class NewAssessmentSensorial(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-        
+
         self.fields["tactile_sensitivity"].label = "Sensibilidade tátil"
         self.fields["termic_sensitivity"].label = "Sensibilidade térmica"
         self.fields["painful_sensitivity"].label = "Sensibilidade dolorosa"
@@ -433,9 +443,9 @@ class NewAssessmentStrength(forms.ModelForm):
         for field in text_fields:
             self.fields[field].widget = forms.Textarea(
                 attrs={
-                    "class": "w-full mr-2 rounded-xl pl-1",
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
                     "rows": 2,
-                    "placeholder": '\n  Se selecionou "Outro(a)", digite aqui as observações',
+                    "placeholder": 'Se selecionou "Outro(a)", digite aqui as observações',
                 }
             )
             self.fields[field].label = "Outro"
@@ -444,7 +454,7 @@ class NewAssessmentStrength(forms.ModelForm):
             self.fields[field].widget.attrs = {
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
-        
+
         self.fields["cervical_strength"].label = "Músculos cervicais"
         self.fields["shoulder_strength"].label = "Músculos do ombros"
         self.fields["elbow_strength"].label = "Músculos do cotovelo"
@@ -453,3 +463,55 @@ class NewAssessmentStrength(forms.ModelForm):
         self.fields["hip_strength"].label = "Músculos do quadril"
         self.fields["knee_strength"].label = "Músculos do joelho"
         self.fields["ankle_and_foot_strength"].label = "Músculos do tornozelo e pé"
+
+
+class NewDailyEvolution(forms.ModelForm):
+    class Meta:
+        model = DailyEvolution
+        exclude = ["date"]
+
+    def __init__(self, *args, **kwargs):
+        super(NewDailyEvolution, self).__init__(*args, **kwargs)
+        self.fields["patient"].widget = forms.HiddenInput()
+        self.fields["patient"].label = ""
+
+        text_fields = ["pain_plainte", "other_conducts", "observations"]
+
+        select_fields = [
+            "presence",
+            "equipment",
+            "stretching",
+            "strengthening",
+        ]
+
+        for field in text_fields:
+            self.fields[field].widget = forms.Textarea(
+                attrs={
+                    "class": "w-full mr-2 rounded-xl pl-2 pt-2",
+                    "rows": 2,
+                    "placeholder": "Digite aqui",
+                }
+            )
+
+        for field in select_fields:
+            self.fields[field].widget.attrs = {
+                "class": "flex rounded-md w-[200px] h-[25px] text-center"
+            }
+
+        self.fields["presence"].label = "Presença"
+        self.fields["equipment"].label = "Equipamentos"
+        self.fields["stretching"].label = "Alongamentos"
+        self.fields["strengthening"].label = "Fortalecimento"
+        self.fields["pain_plainte"].label = "Queixa de dor"
+        self.fields["other_conducts"].label = "Outras condutas"
+        self.fields["observations"].label = "Observações"
+
+
+class CalendarDate(forms.Form):
+    date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date", "class": "flex rounded-md w-[120px] pl-2"}
+        ),
+        label="",
+        initial=date.today(),
+    )

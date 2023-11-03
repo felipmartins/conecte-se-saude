@@ -2,6 +2,7 @@ from datetime import date
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from conectese.forms import (
+    NewDailyEvolution,
     NewPatientForm,
     SelectPatientForm,
     NewMedicalAppointment,
@@ -14,8 +15,14 @@ from conectese.forms import (
     NewAssessmentPosture,
     NewAssessmentSensorial,
     NewAssessmentStrength,
+    CalendarDate,
 )
-from conectese.models import Patient, PhysiotherapyAssessment
+from conectese.models import (
+    Patient,
+    PhysiotherapyAssessment,
+    PhysicalActivityAppointment,
+    DailyEvolution,
+)
 from conectese.utils import check_current_step_physio_evaluation
 
 
@@ -164,7 +171,7 @@ def physio(request, patient_id):
         "Avaliação da sensibilidade",
         "Avaliação do equilíbrio e marcha",
         "Avaliação das atividades de vida diária (AVDs)",
-        "Ficha de avaliação fisioterapêutica detalhada"
+        "Ficha de avaliação fisioterapêutica detalhada",
     ]
 
     step = check_current_step_physio_evaluation(patient)
@@ -221,3 +228,66 @@ def create_physio_assessment(request, patient_id):
         return redirect("home")
     else:
         return redirect("physio", patient_id=patient.id)
+
+
+@login_required(login_url="/login")
+def calendar(request):
+    today = date.today()
+    today_appointments = PhysicalActivityAppointment.objects.filter(
+        date__date=today
+    ).order_by("date")
+    context = {
+        "appointments": today_appointments,
+        "today": today,
+        "date_form": CalendarDate(),
+    }
+    return render(request, "calendar/day.html", context)
+
+
+@login_required(login_url="/login")
+def activity_appointment_details(request, activity_appointment_id):
+    appointment = PhysicalActivityAppointment.objects.get(id=activity_appointment_id)
+    patient_list = list(appointment.patient.all())
+    daily_evolution_dict = {
+        patient.name: len(
+            DailyEvolution.objects.filter(patient=patient, date=appointment.date)
+        )
+        for patient in patient_list
+    }
+    form = CalendarDate()
+    context = {
+        "appointment": appointment,
+        "daily_evolution": daily_evolution_dict,
+        "date_form": form,
+    }
+    return render(request, "calendar/appointment-details.html", context)
+
+
+@login_required(login_url="/login")
+def daily_evolution(request, activity_appointment_id, patient_id):
+    appointment = PhysicalActivityAppointment.objects.get(id=activity_appointment_id)
+    patient = Patient.objects.get(id=patient_id)
+    form = NewDailyEvolution()
+    context = {"appointment": appointment, "patient": patient, "form": form}
+    if request.method == "POST":
+        form = NewDailyEvolution(request.POST)
+        if form.is_valid():
+            DailyEvolution.objects.create(**form.cleaned_data, date=appointment.date)
+            return redirect("activity_appointment_details", activity_appointment_id)
+        print(form.errors)
+    return render(request, "calendar/daily-evolution.html", context)
+
+
+@login_required(login_url="/login")
+def get_calendar_date(request):
+    desired_date = CalendarDate(request.POST)
+    if desired_date.is_valid():
+        today = desired_date.cleaned_data["date"]
+        date_appointments = PhysicalActivityAppointment.objects.filter(
+            date__date=today
+        ).order_by("date")
+        context = {"appointments": date_appointments, "today": today}
+        return render(request, "calendar/day.html", context)
+
+    context = {"patient_form": SelectPatientForm()}
+    return render(request, "index.html", context)

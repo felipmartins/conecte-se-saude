@@ -11,6 +11,7 @@ from conectese.models import (
     AssessmentPosture,
     AssessmentSensorial,
     AssessmentStrength,
+    PhysicalActivityAppointment,
 )
 
 
@@ -26,4 +27,4 @@ admin.site.register(AssessmentMoviment)
 admin.site.register(AssessmentPosture)
 admin.site.register(AssessmentSensorial)
 admin.site.register(AssessmentStrength)
-
+admin.site.register(PhysicalActivityAppointment)
