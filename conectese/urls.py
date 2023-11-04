@@ -13,6 +13,11 @@ from conectese.views import (
     activity_appointment_details,
     daily_evolution,
     get_calendar_date,
+    create_activities,
+    add_patient_to_appointment,
+    remove_patient_from_appointment,
+    calendar_date,
+    delete_activity_from_day,
 )
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
@@ -58,5 +63,30 @@ urlpatterns = [
         "get_calendar_date/",
         get_calendar_date,
         name="get_calendar_date",
+    ),
+    path(
+        "create_activities/",
+        create_activities,
+        name="create_activities",
+    ),
+    path(
+        "add_patient_to_appointment/<int:activity_appointment_id>",
+        add_patient_to_appointment,
+        name="add_patient_to_appointment",
+    ),
+    path(
+        "remove_patient_from_appointment/<int:activity_appointment_id>/<int:patient_id>",
+        remove_patient_from_appointment,
+        name="remove_patient_from_appointment",
+    ),
+    path(
+        "calendar_date/<str:date>",
+        calendar_date,
+        name="calendar_date",
+    ),
+    path(
+        "delete_activity_from_day/<int:activity_appointment_id>/",
+        delete_activity_from_day,
+        name="delete_activity_from_day",
     ),
 ]

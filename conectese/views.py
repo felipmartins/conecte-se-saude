@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from conectese.forms import (
@@ -16,6 +16,7 @@ from conectese.forms import (
     NewAssessmentSensorial,
     NewAssessmentStrength,
     CalendarDate,
+    CreateActivitiesForm,
 )
 from conectese.models import (
     Patient,
@@ -240,6 +241,7 @@ def calendar(request):
         "appointments": today_appointments,
         "today": today,
         "date_form": CalendarDate(),
+        "appointment_form": CreateActivitiesForm(),
     }
     return render(request, "calendar/day.html", context)
 
@@ -254,11 +256,11 @@ def activity_appointment_details(request, activity_appointment_id):
         )
         for patient in patient_list
     }
-    form = CalendarDate()
     context = {
         "appointment": appointment,
         "daily_evolution": daily_evolution_dict,
-        "date_form": form,
+        "date_form": CalendarDate(),
+        "patient_form": SelectPatientForm(),
     }
     return render(request, "calendar/appointment-details.html", context)
 
@@ -286,8 +288,82 @@ def get_calendar_date(request):
         date_appointments = PhysicalActivityAppointment.objects.filter(
             date__date=today
         ).order_by("date")
-        context = {"appointments": date_appointments, "today": today}
+        context = {
+            "appointments": date_appointments,
+            "today": today,
+            "date_form": CalendarDate(),
+        }
         return render(request, "calendar/day.html", context)
 
     context = {"patient_form": SelectPatientForm()}
     return render(request, "index.html", context)
+
+
+@login_required(login_url="/login")
+def create_activities(request):
+    form = CreateActivitiesForm(request.POST)
+    if form.is_valid():
+        print(request.POST)
+        hours = request.POST.getlist("activities_hours")
+        data = form.cleaned_data
+        start_date = data["start_date"]
+        while start_date <= data["end_date"]:
+            for hour in hours:
+                if start_date.weekday() >= 5:
+                    break
+                aux_date = datetime(
+                    start_date.year,
+                    start_date.month,
+                    start_date.day,
+                    int(hour[0:2]),
+                    0,
+                    0,
+                )
+                PhysicalActivityAppointment.objects.create(date=aux_date)
+
+            start_date = start_date + timedelta(days=1)
+
+        return redirect("calendar")
+
+    else:
+        return redirect("calendar")
+
+
+@login_required(login_url="/login")
+def add_patient_to_appointment(request, activity_appointment_id):
+    appointment = PhysicalActivityAppointment.objects.get(id=activity_appointment_id)
+    form = SelectPatientForm(request.POST)
+    if form.is_valid():
+        patient = form.cleaned_data["patient"]
+        appointment.add_patient(patient)
+        return redirect("activity_appointment_details", activity_appointment_id)
+    else:
+        return redirect("activity_appointment_details", activity_appointment_id)
+
+
+@login_required(login_url="/login")
+def remove_patient_from_appointment(request, activity_appointment_id, patient_id):
+    appointment = PhysicalActivityAppointment.objects.get(id=activity_appointment_id)
+    patient = Patient.objects.get(id=patient_id)
+    appointment.remove_patient(patient)
+    return redirect("activity_appointment_details", activity_appointment_id)
+
+
+@login_required(login_url="/login")
+def delete_activity_from_day(request, activity_appointment_id):
+    appointment = PhysicalActivityAppointment.objects.get(id=activity_appointment_id)
+    date = appointment.date
+    appointment.delete()
+    return redirect("calendar_date", date=date.strftime("%Y-%m-%d"))
+
+
+@login_required(login_url="/login")
+def calendar_date(request, date):
+    date = datetime.strptime(date, "%Y-%m-%d").date()
+    date_appointments = PhysicalActivityAppointment.objects.filter(date__date=date)
+    context = {
+        "appointments": date_appointments,
+        "today": date,
+        "date_form": CalendarDate(),
+    }
+    return render(request, "calendar/day.html", context)

@@ -44,7 +44,7 @@ class NewPatientForm(forms.ModelForm):
 class SelectPatientForm(forms.Form):
     patient = forms.ModelChoiceField(
         label="",
-        queryset=Patient.objects.all(),
+        queryset=Patient.objects.all().order_by("name"),
         empty_label="Escolha um paciente",
         widget=forms.Select(
             attrs={"class": "flex rounded-md w-[200px] h-[25px]"},
@@ -514,4 +514,45 @@ class CalendarDate(forms.Form):
         ),
         label="",
         initial=date.today(),
+    )
+
+
+class CreateActivitiesForm(forms.Form):
+    start_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date", "class": "flex rounded-md pl-2 mb-2"}
+        ),
+        label="Data de início",
+        initial=date.today(),
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(
+            attrs={"type": "date", "class": "flex rounded-md pl-2 mb-2"}
+        ),
+        label="Data de término",
+        initial=date.today(),
+    )
+    activities_hours = forms.CharField(
+        widget=forms.CheckboxSelectMultiple(
+            choices=[
+                (hour, hour)
+                for hour in [
+                    "07:00",
+                    "08:00",
+                    "09:00",
+                    "10:00",
+                    "11:00",
+                    "13:00",
+                    "14:00",
+                    "15:00",
+                    "16:00",
+                    "17:00",
+                    "18:00",
+                    "19:00",
+                    "20:00",
+                    "21:00",
+                ]
+            ],
+        ),
+        label="Horário das atividades",
     )
