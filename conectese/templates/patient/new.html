@@ -6,14 +6,14 @@ Cadastro de paciente
 {% endblock %}
 
 {% block content %}
-<div class="flex flex-col w-10/12 h-fit bg-blue-950 rounded-3xl gap-y-4 items-center justify-center mt-24 mb-24">
-    <form class="flex flex-col items-center justify-center w-[500px] mt-8" method="post"
+<div class="flex flex-col bg-blue-950 h-5/6 w-11/12 rounded-3xl gap-y-4 items-center justify-center">
+    <form class="flex flex-col items-center justify-center" method="post"
         action="{% url 'create_patient' %}">
         {% csrf_token %}
 
         {% for field in form %}
         {% if field.label %}
-        <div class="flex my-4 gap-x-4 w-full">
+        <div class="flex my-4 gap-x-4 w-full px-2">
             <label for="{{field.id_for_label}}" class="flex text-orange-500 w-full">{{field.label}}</label>
             <div class="flex items-center justify-end pl-1">
                 {{field}}
@@ -22,8 +22,8 @@ Cadastro de paciente
         {% endif %}
         {% endfor %}
         <div class="flex flex-row gap-x-10">
-            <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl my-8">Cadastrar</button>
-            <a class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl my-8" href="{% url 'home' %}"> Voltar</a>
+            <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-xl my-8">Cadastrar</button>
+            <a class="bg-orange-500 text-white px-4 py-2 rounded-xl my-8" href="{% url 'home' %}"> Voltar</a>
         </div>
 
     </form>

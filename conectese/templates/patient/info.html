@@ -5,41 +5,41 @@
 {% endblock %}
 
 {% block content %}
-    <div class="flex flex-col w-10/12 h-fit bg-blue-950 rounded-3xl gap-y-4 items-center justify-center">
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 mt-10 rounded-3xl">
+<div class="flex flex-col bg-blue-950 h-5/6 w-11/12 rounded-3xl gap-y-4 items-center justify-center">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 mt-10 rounded-3xl">
             Nome: {{patient.name}}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             Data de nascimento: {{patient.birth_date|date:"d/m/Y"}}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             CPF: {{patient.cpf}}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             Telefone de contato: {{patient.contact_phone}}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             Telefone de emergência: {{patient.emergency_phone}}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             {% for key, value in civil.items %}
                 {% if key == patient.civil_status %}
                     Estado civil: {{value}}
                 {% endif%}
             {% endfor %}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
             {% for key, value in gender.items %}
                 {% if key == patient.gender %}
                     Gênero: {{value}}
                 {% endif%}
             {% endfor %}
         </div>
-        <div class="flex items-center justify-center w-1/2 h-[50px] bg-orange-500 text-white text-lg opacity-70 my-2 rounded-3xl">
+        <div class="flex items-center justify-center w-11/12 h-[50px] bg-orange-500 text-white text-lg opacity-70 mt-2 mb-6 rounded-3xl">
             {% if patient.pay_day %}
             Dia do Vencimento: {{patient.pay_day}}
             {% else %}
-            Dia do Vencimento: Sem pagamentos
+            Ainda sem pagamentos
             {% endif %}
         </div>
 

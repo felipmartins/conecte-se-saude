@@ -62,7 +62,7 @@ class NewMedicalAppointment(forms.ModelForm):
         self.fields["medical_record"].label = "Prontuário"
         self.fields["medical_record"].widget = forms.Textarea(
             attrs={
-                "class": "w-full mr-4 rounded-xl pl-2 pt-2",
+                "class": "w-11/12 rounded-xl pl-2 pt-2",
                 "rows": 20,
                 "placeholder": "Digite aqui o prontuário do paciente",
             }
@@ -357,13 +357,13 @@ class NewAssessmentPosture(forms.ModelForm):
             }
 
         self.fields["general_observation"].label = "Observações gerais"
-        self.fields["head_alligment"].label = "Alinhamento da cabeça"
-        self.fields["shoulder_alligment"].label = "Alinhamento dos ombros"
-        self.fields["collumn_alligment"].label = "Alinhamento da coluna vertebral"
-        self.fields["pelvis_alligment"].label = "Alinhamento da pelve"
+        self.fields["head_alligment"].label = "Cabeça"
+        self.fields["shoulder_alligment"].label = "Ombros"
+        self.fields["collumn_alligment"].label = "Coluna vertebral"
+        self.fields["pelvis_alligment"].label = "Pelve"
         self.fields[
             "superior_and_inferior_members"
-        ].label = "Alinhamento dos membros superiores e inferiores"
+        ].label = "Membros superiores e inferiores"
 
 
 class NewAssessmentSensorial(forms.ModelForm):
@@ -403,9 +403,9 @@ class NewAssessmentSensorial(forms.ModelForm):
                 "class": "flex rounded-md w-[200px] h-[25px] text-center"
             }
 
-        self.fields["tactile_sensitivity"].label = "Sensibilidade tátil"
-        self.fields["termic_sensitivity"].label = "Sensibilidade térmica"
-        self.fields["painful_sensitivity"].label = "Sensibilidade dolorosa"
+        self.fields["tactile_sensitivity"].label = "Tátil"
+        self.fields["termic_sensitivity"].label = "Térmica"
+        self.fields["painful_sensitivity"].label = "Dolorosa"
 
 
 class NewAssessmentStrength(forms.ModelForm):

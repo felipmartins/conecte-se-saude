@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 </head>
-<body class="flex flex-col bg-[#0048ac] text-orange-500 w-screen h-full gap-y-4 items-center justify-center">
+<body class="bg-[#0048ac] text-orange-500 w-screen h-full min-h-screen flex flex-col items-center justify-center overflow-auto">
     {% block content %} {% endblock %}
 </body>
 </html>

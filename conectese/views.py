@@ -167,12 +167,12 @@ def physio(request, patient_id):
     form_title = [
         "Avaliação de histórico",
         "Avaliação da postura",
-        "Avaliação da amplitude de movimento (AM)",
+        "Avaliação da amplitude de movimento",
         "Avaliação da força muscular",
         "Avaliação da sensibilidade",
         "Avaliação do equilíbrio e marcha",
-        "Avaliação das atividades de vida diária (AVDs)",
-        "Ficha de avaliação fisioterapêutica detalhada",
+        "Avaliação das atividades diária",
+        "Avaliação fisioterapêutica",
     ]
 
     step = check_current_step_physio_evaluation(patient)

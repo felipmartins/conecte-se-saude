@@ -7,7 +7,7 @@ Conecte-se Saúde
 
 {% block content %}
 
-<div class="grid grid-cols-3 gap-16 mt-24">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12 w-full overflow-auto pb-32 pt-12">
     <div>
         <a class="flex flex-col items-center" href="{% url 'create_patient' %}">
             <span class="font-bold">Cadastrar paciente</span>
@@ -34,7 +34,7 @@ Conecte-se Saúde
                 {% csrf_token %}
                 {{patient_form.as_p}}
                 <input type="hidden" name="appointment_type" value="information">
-                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-xl mt-8">Selecionar</button>
             </form>
         </label>
 
@@ -60,7 +60,7 @@ Conecte-se Saúde
                 {% csrf_token %}
                 {{patient_form.as_p}}
                 <input type="hidden" name="appointment_type" value="medical">
-                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-xl mt-8">Selecionar</button>
             </form>
         </label>
 
@@ -87,7 +87,7 @@ Conecte-se Saúde
                 {% csrf_token %}
                 {{patient_form.as_p}}
                 <input type="hidden" name="appointment_type" value="physio">
-                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-xl mt-8">Selecionar</button>
             </form>
         </label>
     </div>
@@ -110,7 +110,7 @@ Conecte-se Saúde
                 {% csrf_token %}
                 {{patient_form.as_p}}
                 <input type="hidden" name="appointment_type" value="payment">
-                <button type="submit" class="bg-orange-500 text-blue-800 px-4 py-2 rounded-xl mt-8">Selecionar</button>
+                <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded-xl mt-8">Selecionar</button>
             </form>
         </label>
     </div>
